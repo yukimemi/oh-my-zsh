@@ -264,11 +264,6 @@ alias tweetvim="vim -c TweetVimHomeTimeline"
 # }}}
 #######################################################################################################
 ###{{{ function
-# cdしたらlsするのが癖だから。
-#function cd() {builtin cd $@ && ls -v -F --color=auto}
-#function cd() {builtin cd $@ && ls -v -F }
-# これも、cdしたらlsしてくれるが、こっちのほうがauto_cdの場合でもlsしてくれるのでこっちで。
-# function chpwd() { ls -v -F --color=auto }
 function chpwd() { ls -F }
 
 # 'google ほげほげ'ですぐに検索。
@@ -299,6 +294,7 @@ cdup() {
     if [ -z "$BUFFER" ]; then
         echo
         cd ..
+        chpwd
         if type precmd > /dev/null 2>&1; then
             precmd
         fi
@@ -312,7 +308,7 @@ cdup() {
     fi
 }
 zle -N cdup
-bindkey '\^' cdup
+bindkey '^^' cdup
 
 # キーバインドがviの時に，ノーマルモードとインサートモードの状態を状況に応じて表示
 readuntil () {
@@ -559,6 +555,9 @@ if [ -d "${HOME}/.zaw" ] ; then
     source ~/.zaw/zaw.zsh
     # zaw-cdr
     bindkey '^@' zaw-cdr # zaw-cdrをbindkey
+else
+    git clone https://github.com/zsh-users/zaw.git ~/.zaw
+
 fi
 
 # }}}
