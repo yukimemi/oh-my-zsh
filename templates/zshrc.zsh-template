@@ -51,6 +51,7 @@ export LANG=ja_JP.UTF-8
 export LC_CTYPE="ja_JP.UTF-8"
 
 # antigen
+[[ ! -d ~/.antigen ]] && git clone https://github.com/zsh-users/antigen.git ~/.antigen
 source ~/.antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
