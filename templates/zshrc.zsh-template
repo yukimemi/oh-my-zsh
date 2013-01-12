@@ -262,6 +262,10 @@ alias exifM2ts="exiftool '-FileName < DateTimeOriginal' -d /Volumes/new/backup/m
 alias exifRecDateTimeOriginal="exiftool -r '-FileName < DateTimeOriginal' -d /Volumes/new/backup/m2ts/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e ."
 alias tweetvim="vim -c TweetVimHomeTimeline"
 
+# global alias
+alias -g L=' | lv'
+alias -g G=' | grep'
+
 # }}}
 #######################################################################################################
 ###{{{ function
