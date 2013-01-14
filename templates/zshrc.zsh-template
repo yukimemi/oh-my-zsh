@@ -201,7 +201,7 @@ case "${OSTYPE}" in
         alias vlc='open -a /Applications/vlc/VLC.app "$@"'
         alias gansimu='cd ~/Applications/GANSIMU_MHP3; java -jar gansimu.jar'
         alias nicocache='cd ~/Applications/nicocache; java -jar NicoCache_nl.jar'
-        alias mplayer='open -a /Applications/MPlayerX.app "$@"'
+        #alias mplayer='open -a /Applications/MPlayerX.app "$@"'
         #alias java='java -Dfile.encoding=UTF-8'
         #alias mocp='jackd -d coreaudio &; mocp'
         alias mocp='mocp -T ~/.moc/themes/yellow_red_theme'
@@ -264,18 +264,18 @@ alias -g G=' | grep'
 function chpwd() { ls -F }
 
 # 'google ほげほげ'ですぐに検索。
-function google() {
-    local str opt
-    if [ $ != 0 ]; then
-        for i in $*; do
-            str="$str+$i"
-        done
-        str=`echo $str | sed 's/^\+//'`
-        opt='search?num=50&hl=ja&lr=lang_ja'
-        opt="${opt}&q=${str}"
-    fi
-    w3m http://www.google.co.jp/$opt
-}
+#function google() {
+    #local str opt
+    #if [ $ != 0 ]; then
+        #for i in $*; do
+            #str="$str+$i"
+        #done
+        #str=`echo $str | sed 's/^\+//'`
+        #opt='search?num=50&hl=ja&lr=lang_ja'
+        #opt="${opt}&q=${str}"
+    #fi
+    #w3m http://www.google.co.jp/$opt
+#}
 
 # w3mでALC検索
 function alc() {
