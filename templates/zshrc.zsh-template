@@ -214,7 +214,7 @@ case "${OSTYPE}" in
         #alias mocp='jackd -d coreaudio &; mocp'
         alias mocp='mocp -T ~/.moc/themes/yellow_red_theme'
         alias jackd='jackd -d coreaudio &'
-        alias less='/usr/share/vim/vim72/macros/less.sh'
+        #alias less='/usr/share/vim/vim72/macros/less.sh'
         alias sudo='sudo '
         alias screensaver='open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app'
         ;;
