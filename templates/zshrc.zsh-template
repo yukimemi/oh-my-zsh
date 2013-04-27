@@ -438,18 +438,18 @@ fi
 
 
 #起動時にscreen起動
-case "${OSTYPE}" in
-    freebsd*|darwin*|cygwin)
-        if [ $TERM != "screen" ]; then
-            exec screen -U -RR
-        fi
-        ;;
-    linux*)
-        if [ $TERM != "screen-bce" ]; then
-            exec byobu -U -RR
-        fi
-        ;;
-esac
+#case "${OSTYPE}" in
+    #freebsd*|darwin*|cygwin)
+        #if [ $TERM != "screen" ]; then
+            #exec screen -U -RR
+        #fi
+        #;;
+    #linux*)
+        #if [ $TERM != "screen-bce" ]; then
+            #exec byobu -U -RR
+        #fi
+        #;;
+#esac
 
 # screen 下部に実行コマンド記載
 if [ "$TERM" = "screen" ]; then
@@ -488,6 +488,17 @@ if [ "$TERM" = "screen" ]; then
         echo -n "k$cmd[1]:t\\") 2>/dev/null
     }
     #     chpwd
+fi
+
+if [ $OSTYPE = "cygwin" ]; then
+    if [ $TERM != "screen" ]; then
+        exec screen -U -RR
+    fi
+else
+    # http://filmlang.org/computer/tmux
+    if [ -z $TMUX ]; then
+        tmux attach || tmux
+    fi
 fi
 
 # tmuxの中でsshを実行した場合，新しくウィンドウを作成する
