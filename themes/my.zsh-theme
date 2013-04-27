@@ -72,4 +72,11 @@ prompt_update() {
 
 }
 
+function virtualenv_info {
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`')'
+}
+
+#RPROMPT='%{$fg[green]%}$(virtualenv_info)%{$reset_color%}% %{$fg[red]%}$(rvm_ruby_prompt)%{$reset_color%}'
+RPROMPT='%{$fg[green]%}$(virtualenv_info)%{$reset_color%}%'
+
 add-zsh-hook precmd prompt_update
