@@ -218,6 +218,7 @@ case "${OSTYPE}" in
         #alias less='/usr/share/vim/vim72/macros/less.sh'
         #alias sudo='sudo '
         alias screensaver='open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app'
+	alias vagrantOld='HOME=/Users/mini/.veewee; bundle exec vagrant'
         ;;
     darwin9)
         alias ls='ls --color=auto'
