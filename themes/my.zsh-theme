@@ -82,5 +82,6 @@ function rbenv_info {
 }
 
 #RPROMPT='%{$fg[green]%}$(virtualenv_info)%{$reset_color%}% %{$fg[red]%}$(rvm_ruby_prompt)%{$reset_color%}'
-RPROMPT='%{$fg[green]%}$(virtualenv_info) $(rbenv_info)%{$reset_color%}%' 
+#RPROMPT='%{$fg[green]%}$(virtualenv_info) $(rbenv_info)%{$reset_color%}%' 
+RPROMPT='%{$fg[green]%}$(virtualenv_info) $(rbenv_prompt_info)%{$reset_color%}%' 
 add-zsh-hook precmd prompt_update

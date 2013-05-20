@@ -63,6 +63,9 @@ antigen-bundle git
 antigen-bundle heroku
 antigen-bundle pip
 antigen-bundle lein
+antigen-bundle rbenv
+antigen-bundle virtualenv
+#antigen-bundle virtualenvwrapper
 #antigen-bundle command-not-found
 
 # Syntax highlighting bundle.
@@ -219,6 +222,8 @@ case "${OSTYPE}" in
         #alias sudo='sudo '
         alias screensaver='open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app'
         alias vagrantOld='HOME=/Users/mini/.veewee; bundle exec vagrant'
+        # alias to nw
+        alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
         ;;
     darwin9)
         alias ls='ls --color=auto'
