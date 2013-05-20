@@ -234,7 +234,6 @@ case "${OSTYPE}" in
         alias sc='byobu -U -RR'
         #alias rm=trash-cli
         alias link='/cygdrive/c/Program\ Files/Windows\ Resource\ Kits/Tools/linkd'
-        alias vim=vim
         alias open=cygstart
         ;;
 esac
