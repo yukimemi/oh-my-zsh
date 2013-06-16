@@ -503,7 +503,7 @@ if [ $OSTYPE = "cygwin" ]; then
 else
     # http://filmlang.org/computer/tmux
     if [ -z $TMUX ]; then
-        tmux attach || tmux
+        tmux attach -d || tmux
     fi
 fi
 
