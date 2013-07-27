@@ -74,6 +74,8 @@ antigen-bundle zsh-users/zsh-syntax-highlighting
 # Tell antigen that you're done.
 antigen-apply
 
+# neobundle
+[[ ! -d ~/.bundle/neobundle.vim ]] && git clone git://github.com/Shougo/neobundle.vim ~/.bundle/neobundle.vim
 
 #######################################################################################################
 ###{{{ キーバインド
