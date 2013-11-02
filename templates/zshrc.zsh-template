@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="my"
+# ZSH_THEME="my"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -75,7 +75,20 @@ antigen-bundle zsh-users/zsh-syntax-highlighting
 antigen-apply
 
 # neobundle
-[[ ! -d ~/.bundle/neobundle.vim ]] && git clone git://github.com/Shougo/neobundle.vim ~/.bundle/neobundle.vim
+[ ! -d ~/.bundle/neobundle.vim ] && git clone git://github.com/Shougo/neobundle.vim ~/.bundle/neobundle.vim
+
+# pure
+[ ! -d ~/.pure ] && git clone https://github.com/sindresorhus/pure.git ~/.pure
+[ ! -d /usr/local/share/zsh/site-functions ] && mkdir -p /usr/local/share/zsh/site-functions
+fpath=(/usr/local/share/zsh/site-functions(N-/) $fpath)
+ln -sf "${HOME}/.pure/pure.zsh" /usr/local/share/zsh/site-functions/prompt_pure_setup
+autoload -U promptinit && promptinit
+prompt pure
+
+# tmux powerline
+[ ! -d ~/.tmux-powerline ] && git clone git@github.com:yuyunko/tmux-powerline.git ~/.tmux-powerline
+ln -sf ~/.tmux-powerline/.tmux-powerlinerc ~/
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 #######################################################################################################
 ###{{{ キーバインド
@@ -200,7 +213,7 @@ fi
 ###{{{ alias
 # それぞれの環境に合わせてaliasを設定
 case "${OSTYPE}" in
-    freebsd*|darwin11*|darwin12*)
+    freebsd*|darwin11*|darwin12*|darwin13*)
         alias ls='ls --color=auto'
         #alias sc='screen -U -RR'
         alias fcd='source ~/bin/scripts/fcd.sh'
