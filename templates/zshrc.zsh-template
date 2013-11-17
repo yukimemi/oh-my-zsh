@@ -83,6 +83,18 @@ fpath=($HOME/.zsh/site-functions(N-/) $fpath)
 ln -sf "${HOME}/.pure/pure.zsh" $HOME/.zsh/site-functions/prompt_pure_setup
 autoload -U promptinit && promptinit
 prompt pure
+# right prompt
+function pyenv_info {
+    if which pyenv > /dev/null 2>&1; then
+        pyenv version | sed -e 's/ .*//'
+    fi
+}
+function rbenv_info {
+    if which rbenv > /dev/null 2>&1; then
+        rbenv version | sed -e 's/ .*//'
+    fi
+}
+RPROMPT='[$(pyenv_info)] ($(rbenv_info))'
 
 # tmux powerline
 [ ! -d ~/.tmux-powerline ] && git clone git@github.com:yuyunko/tmux-powerline.git ~/.tmux-powerline
