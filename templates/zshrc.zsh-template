@@ -73,9 +73,6 @@ antigen-bundle zsh-users/zsh-syntax-highlighting
 # Tell antigen that you're done.
 antigen-apply
 
-# neobundle
-[ ! -d ~/.bundle/neobundle.vim ] && git clone git://github.com/Shougo/neobundle.vim ~/.bundle/neobundle.vim
-
 # pure
 [ ! -d ~/.pure ] && git clone https://github.com/sindresorhus/pure.git ~/.pure
 [ ! -d $HOME/.zsh/site-functions ] && mkdir -p $HOME/.zsh/site-functions
@@ -249,7 +246,7 @@ case "${OSTYPE}" in
         alias screensaver='open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app'
         alias vagrantOld='HOME=/Users/mini/.veewee; bundle exec vagrant'
         # alias to nw
-        alias nw="/Applications/node-webkit.app/Contents/MacOS/node-webkit"
+        alias nw="~/Applications/node-webkit.app/Contents/MacOS/node-webkit"
         ;;
     darwin9)
         alias ls='ls --color=auto'
