@@ -1,3 +1,4 @@
+#{{{ Original oh-my-zsh settings
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -15,7 +16,7 @@ ZSH=$HOME/.oh-my-zsh
 # CASE_SENSITIVE="true"
 
 # Uncomment this to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how often before auto-updates occur? (in days)
 # export UPDATE_ZSH_DAYS=13
@@ -37,7 +38,7 @@ ZSH=$HOME/.oh-my-zsh
 # much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment following line if you want to  shown in the command execution time stamp 
+# Uncomment following line if you want to  shown in the command execution time stamp
 # in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
 # yyyy-mm-dd
 # HIST_STAMPS="mm/dd/yyyy"
@@ -48,15 +49,18 @@ ZSH=$HOME/.oh-my-zsh
 # plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+# }}}
 
 # Customize to your needs...
 
+#######################################################################################################
+#{{{ Basic
 # LANG
 export LANG=ja_JP.UTF-8
 export LC_CTYPE="ja_JP.UTF-8"
 
 # antigen
-[[ ! -d ~/.antigen ]] && git clone https://github.com/zsh-users/antigen.git ~/.antigen
+[ ! -d ~/.antigen ] && git clone https://github.com/zsh-users/antigen.git ~/.antigen
 source ~/.antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -69,10 +73,6 @@ antigen-bundle pip
 antigen-bundle lein
 antigen-bundle rbenv
 antigen-bundle virtualenv
-#antigen-bundle virtualenvwrapper
-#antigen-bundle command-not-found
-
-# Syntax highlighting bundle.
 antigen-bundle zsh-users/zsh-syntax-highlighting
 
 # Tell antigen that you're done.
@@ -102,12 +102,12 @@ RPROMPT='[$(pyenv_info)] ($(rbenv_info))'
 [ ! -d ~/.tmux-powerline ] && git clone git@github.com:yuyunko/tmux-powerline.git ~/.tmux-powerline
 ln -sf ~/.tmux-powerline/.tmux-powerlinerc ~/
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
-
+# }}}
 #######################################################################################################
-###{{{ キーバインド
+#{{{ key bind
 bindkey -v
 
-# zshのviキーバインドでコマンドラインスタック＋α #Zsh - Qiita
+# zsh vi key command line stack - Qiita
 # http://qiita.com/items/1f2c7793944b1f6cc346
 show_buffer_stack() {
     POSTDISPLAY="
@@ -118,14 +118,14 @@ zle -N show_buffer_stack
 setopt noflowcontrol
 bindkey '^Q' show_buffer_stack
 
-# 補完候補のメニュー選択で、矢印キーの代わりにhjklで移動出来るようにする。
+# move at hjkl on menu select
 zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
-# 途中までコマンドを打っていて、これ前も入力したと思ったときに、Ctrl-Pで補完してくれる。さらに押せばより古いコマンドで補完。やっぱりさっきの、というときはCtrl-nで戻る。
+# history backward search
 autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -134,42 +134,18 @@ bindkey "" history-beginning-search-forward-end
 
 # }}}
 #######################################################################################################
-###{{{ 補完に関する設定
-
-
-# 移動した場所を記録し、cd -[TAB] で以前移動したディレクトリの候補を提示してくれて、その番号を入力することで移動出来るようになる。
+#{{{ complement
 setopt auto_pushd
-
-# auto_pushdで重複するディレクトリは記録しないようにする。
 setopt pushd_ignore_dups
-
-# コマンドのスペルミスを指摘して予想される正しいコマンドを提示してくれる。このときのプロンプトがSPROMPT。
 setopt nocorrect_all
 setopt correct
-
-
-# 補完候補が複数ある時に、一覧表示する
 setopt auto_list
-
-#  auto_list の補完候補一覧で、ls -F のようにファイルの種別をマーク表示
 setopt list_types
-
-# コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
 setopt magic_equal_subst
-
-# サスペンド中のプロセスと同じコマンド名を実行した場合はリジュームする
 setopt auto_resume
-
-# ディレクトリの最後のスラッシュを自動で削除する
 setopt autoremoveslash
-
-# コマンドにsudoを付けてもきちんと補完出来るようにする。Ubuntuだと/etc/zsh/zshrcで設定されている。
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
-
-# 大文字・小文字を区別しないで補完出来るようにするが、大文字を入力した場合は区別する。
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-# zstyleによる補完設定
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
 zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
@@ -177,91 +153,47 @@ zstyle ':completion:*:warnings' format $RED'No matches for:'$YELLOW' %d'$DEFAULT
 zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
 zstyle ':completion:*:corrections' format $YELLOW'%B%d '$RED'(errors: %e)%b'$DEFAULT
 zstyle ':completion:*:options' description 'yes'
-# グループ名に空文字列を指定すると，マッチ対象のタグ名がグループ名に使われる。
-# したがって，すべての マッチ種別を別々に表示させたいなら以下のようにする
 zstyle ':completion:*' group-name ''
 
 # }}}
 #######################################################################################################
-###{{{ 履歴(history)に関する設定
-## ヒストリを保存するファイル
+#{{{ history
 if [ -d ~/Dropbox ]; then
     HISTFILE=~/Dropbox/.zsh_history
 else
     HISTFILE=~/.zsh_history
 fi
 
-# 履歴を複数端末間で共有する。
 setopt share_history
-
-# 複数の zsh を同時に使う時など history ファイルに上書きせず追加する
 setopt append_history
-
-# 重複するコマンドが記憶されるとき、古い方を削除する。
 setopt hist_ignore_all_dups
-
-# 直前のコマンドと同じ場合履歴に追加しない。
 setopt hist_ignore_dups
-
-# 重複するコマンドが保存されるとき、古い方を削除する。
 setopt hist_save_no_dups
-
-#  zsh の開始・終了時刻をヒストリファイルに書き込む
 setopt extended_history
-
-#  コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
 setopt hist_ignore_space
-
-#  ヒストリを呼び出してから実行する間に一旦編集できる状態になる
 setopt hist_verify
-
-# apt-getやdpkgなどのキャッシュ
-if [ -d ~/.zsh/cache ]; then
-    zstyle ':completion:*' use-cache yes
-    zstyle ':completion:*' cache-path ~/.zsh/cache
-fi
+[ ! -d ~/.zsh/cache ] && mkdir -p ~/.zsh/cache
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # }}}
 #######################################################################################################
-###{{{ alias
-# それぞれの環境に合わせてaliasを設定
+#{{{ alias
+# setting for OS type
 case "${OSTYPE}" in
-    freebsd*|darwin11*|darwin12*|darwin13*)
+    freebsd*|darwin*)
         alias ls='ls --color=auto'
-        #alias sc='screen -U -RR'
-        alias fcd='source ~/bin/scripts/fcd.sh'
         alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-        #alias -g macvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-                #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacPorts/MacVim.app/Contents/MacOS/Vim "$@"'
-        alias gvim='env LANG=ja_JP.UTF-8 open -a /Applications/MacVim.app "$@"'
         alias rm=rmtrash
-        #alias port='port -d'
         alias empty-trash='sudo /bin/rm -rf ~/.Trash/*'
         alias shitamplayer='mplayer -fixed-vo -framedrop -ontop -geometry 100%:100%'
-        alias vlc='open -a /Applications/vlc/VLC.app "$@"'
-        alias gansimu='cd ~/Applications/GANSIMU_MHP3; java -jar gansimu.jar'
-        alias nicocache='cd ~/Applications/nicocache; java -jar NicoCache_nl.jar'
-        #alias mplayer='open -a /Applications/MPlayerX.app "$@"'
-        #alias java='java -Dfile.encoding=UTF-8'
-        #alias mocp='jackd -d coreaudio &; mocp'
-        alias mocp='mocp -T ~/.moc/themes/yellow_red_theme'
-        alias jackd='jackd -d coreaudio &'
-        #alias less='/usr/share/vim/vim72/macros/less.sh'
-        #alias sudo='sudo '
+        alias vlc='open -a ~/Applications/VLC.app "$@"'
         alias screensaver='open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app'
-        alias vagrantOld='HOME=/Users/mini/.veewee; bundle exec vagrant'
-        # alias to nw
         alias nw="~/Applications/node-webkit.app/Contents/MacOS/node-webkit"
-        ;;
-    darwin9)
-        alias ls='ls --color=auto'
-        export GIT_PAGER='less'
         ;;
     linux*|cygwin)
         alias ls='ls --color=auto'
-        alias sc='byobu -U -RR'
-        #alias rm=trash-cli
-        alias link='/cygdrive/c/Program\ Files/Windows\ Resource\ Kits/Tools/linkd'
+        alias rm=trash-cli
         alias open=cygstart
         ;;
 esac
@@ -276,16 +208,6 @@ alias mv='mv -iv'
 alias cp='cp -iv'
 alias ll='ls -lh'
 alias lla='ls -al'
-alias mixi='firefox http://mixi.jp/home.pl?from=global &'
-#alias ssh-server='screen -t server ssh -X server@server-laptop'
-alias ssh-iphone='screen -t iPhone ssh mobile@192.168.1.5'
-alias ssh-ipad='screen -t iPad ssh mobile@192.168.1.4'
-#alias ssh-macmini='screen -t macmini ssh -X mini@yuyumemi.dyndns.org'
-alias ssh-macmini='screen -t macmini ssh mini@yuyumemi.dyndns.org'
-alias dd-wrt='firefox http://192.168.1.1 &'
-alias hatena='firefox http://d.hatena.ne.jp/yuyunko &'
-alias mintsuspend='ssh -t mint@mint sudo pm-suspend'
-alias wol='wakeonlan b8:ac:6f:54:1f:1e'
 alias exifMov="exiftool '-FileName < CreateDate' -d /Volumes/new/backup/Mov/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e *.(MOV|mov)"
 alias exifJpg="exiftool '-FileName < CreateDate' -d /Volumes/new/backup/Photos/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e *.(JPG|jpg)"
 alias exifRecCreateDate="exiftool -r '-FileName < CreateDate' -d /Volumes/new/backup/Photos/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e ."
@@ -302,34 +224,33 @@ alias -g G=' | grep'
 
 # }}}
 #######################################################################################################
-###{{{ function
+#{{{ function
 function chpwd() { ls -F }
 
-# 'google ほげほげ'ですぐに検索。
-#function google() {
-    #local str opt
-    #if [ $ != 0 ]; then
-        #for i in $*; do
-            #str="$str+$i"
-        #done
-        #str=`echo $str | sed 's/^\+//'`
-        #opt='search?num=50&hl=ja&lr=lang_ja'
-        #opt="${opt}&q=${str}"
-    #fi
-    #w3m http://www.google.co.jp/$opt
-#}
-
-# w3mでALC検索
-function alc() {
-if [ $ != 0 ]; then
-    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
-else
-    w3m "http://www.alc.co.jp/"
-fi
+function google() {# {{{
+    local str opt
+    if [ $ != 0 ]; then
+        for i in $*; do
+            str="$str+$i"
+        done
+        str=`echo $str | sed 's/^\+//'`
+        opt='search?num=50&hl=ja&lr=lang_ja'
+        opt="${opt}&q=${str}"
+    fi
+    w3m http://www.google.co.jp/$opt
 }
+# }}}
 
-# C-^ で一つ上のディレクトリへ
-cdup() {
+function alc() {# {{{
+    if [ $ != 0 ]; then
+        w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
+    else
+        w3m "http://www.alc.co.jp/"
+    fi
+}
+# }}}
+
+cdup() {# {{{
     if [ -z "$BUFFER" ]; then
         echo
         cd ..
@@ -348,8 +269,9 @@ cdup() {
 }
 zle -N cdup
 bindkey '^^' cdup
+# }}}
 
-# キーバインドがviの時に，ノーマルモードとインサートモードの状態を状況に応じて表示
+# print NORMAL or INSERT mode# {{{
 readuntil () {
     typeset a
     while [ "$a" != "$1" ]
@@ -451,13 +373,13 @@ makemodal vi-replace           REPLACE
 makemodal vi-cmd-mode          NORMAL
 
 unfunction makemodal
+# }}}
 
-
-# どの環境でもクリップボードにコピー(macではpbcopy linuxではxselが必要)
-# 使い方
-# % vim mail.txt    # vim でメールを書く
-# % cat mail.txt C  # メールの内容をクリップボードにコピーする
-# INPUT.txt のうち 10から15行目をクリップボードにコピーする
+# copy to clipboard (require pbcopy on mac and xcel on linux)# {{{
+# Example
+# % vim mail.txt
+# % cat mail.txt C
+# copy line from 10 to 15 in the INPUT.txt
 # % sed -n '10,15p' INPUT.txt C
 if which pbcopy >/dev/null 2>&1 ; then
     # Mac
@@ -469,23 +391,9 @@ elif which putclip >/dev/null 2>&1 ; then
     # Cygwin
     alias -g C='| putclip'
 fi
+# }}}
 
-
-#起動時にscreen起動
-#case "${OSTYPE}" in
-    #freebsd*|darwin*|cygwin)
-        #if [ $TERM != "screen" ]; then
-            #exec screen -U -RR
-        #fi
-        #;;
-    #linux*)
-        #if [ $TERM != "screen-bce" ]; then
-            #exec byobu -U -RR
-        #fi
-        #;;
-#esac
-
-# screen 下部に実行コマンド記載
+# print command under the screen# {{{
 if [ "$TERM" = "screen" ]; then
     #     chpwd () { echo -n "_`dirs`\\" }
     preexec() {
@@ -523,7 +431,9 @@ if [ "$TERM" = "screen" ]; then
     }
     #     chpwd
 fi
+# }}}
 
+# start tmux or screen when shell opened# {{{
 if [ $OSTYPE = "cygwin" ]; then
     if [ $TERM != "screen" ]; then
         exec screen -U -RR
@@ -534,41 +444,18 @@ else
         tmux attach -d || tmux
     fi
 fi
+# }}}
 
-# tmuxの中でsshを実行した場合，新しくウィンドウを作成する
-# http://blog.repl.info/2011/12/03/ssh-with-tmux-and-zsh/
-#if [ $OSTYPE != cygwin ]; then
-    #if [ -z $TMUX ]; then
-        #function ssh_tmux() {
-        #eval server=\${$#}
-        #tmux new-window -n $@ "exec ssh $@"
-    #}
-    #alias ssh=ssh_tmux
-    #fi
-#fi
-
-
-# tmuxの中でmanを実行した場合，新しくペインを作成する
-# http://blog.repl.info/2011/12/03/ssh-with-tmux-and-zsh/
-#if [ $OSTYPE != cygwin ]; then
-    #if [ $TERM = screen ]; then
-        #function man_tmux() {
-        #eval server=\${$#}
-        #tmux split-window "exec man $@"
-    #}
-    #alias man=man_tmux
-    #fi
-#fi
-
-############# macのみ #########################
-# pbcopyで日本語(UTF-8)がコピーできるようになる
-#__CF_USER_TEXT_ENCODING=0x1F5:1:14    # 元の値
+############# only mac #########################
+# copy Japanese language on pbcopy# {{{
+#__CF_USER_TEXT_ENCODING=0x1F5:1:14    # original value
 if [ $OSTYPE = "darwin*" ]; then
     __CF_USER_TEXT_ENCODING=0x1F5:0x8000100:14
     export __CF_USER_TEXT_ENCODING
 fi
+# }}}
 
-# macのみ 処理時間が30秒以上なら終わった時Growlで通知
+# notification at Growl over 30 seconds# {{{
 if [ $OSTYPE = "darwin*" ]; then
     local COMMAND=""
     local COMMAND_TIME=""
@@ -589,11 +476,10 @@ if [ $OSTYPE = "darwin*" ]; then
         COMMAND_TIME=`date +%s`
     }
 fi
-############# macのみ #########################
-
+# }}}
 # }}}
 #######################################################################################################
-###{{{ plugins
+#{{{ plugins
 # zaw
 [[ ! -d "${HOME}/.zaw" ]] && git clone https://github.com/zsh-users/zaw.git ~/.zaw
 zstyle ':filter-select' case-insensitive yes # 絞り込みをcase-insensitiveに
@@ -604,13 +490,12 @@ zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 source ~/.zaw/zaw.zsh
 # zaw-cdr
-bindkey '^@' zaw-cdr # zaw-cdrをbindkey
-
+bindkey '^@' zaw-cdr
 # }}}
 #######################################################################################################
-#{{{ 個人用設定ファイルがあればそれを読み込む
+#{{{ local conf
 if [ -e ~/.zshrc_private ]; then
     source ~/.zshrc_private
 fi
-
 # }}}
+
