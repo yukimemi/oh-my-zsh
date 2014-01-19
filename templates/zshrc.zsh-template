@@ -203,6 +203,7 @@ alias vimfiler='vim -c VimFilerDouble'
 alias mvimfiler='mvim -c VimFilerDouble'
 alias vimshell='vim -c VimShell'
 alias mvimshell='mvim -c VimShell'
+alias tweetvim='vim +TweetVimUserStream'
 alias diff=colordiff
 alias mv='mv -iv'
 alias cp='cp -iv'
