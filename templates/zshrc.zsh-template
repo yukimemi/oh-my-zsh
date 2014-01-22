@@ -99,7 +99,7 @@ function rbenv_info {
 RPROMPT='[$(pyenv_info)] ($(rbenv_info))'
 
 # tmux powerline
-[ ! -d ~/.tmux-powerline ] && git clone git@github.com:yuyunko/tmux-powerline.git ~/.tmux-powerline
+[ ! -d ~/.tmux-powerline ] && git clone git@github.com:yukimemi/tmux-powerline.git ~/.tmux-powerline
 ln -sf ~/.tmux-powerline/.tmux-powerlinerc ~/
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 # }}}
@@ -209,6 +209,7 @@ alias mv='mv -iv'
 alias cp='cp -iv'
 alias ll='ls -lh'
 alias lla='ls -al'
+alias exifany="exiftool '-FileName < CreateDate' -d /Volumes/new/backup/any/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e *.*"
 alias exifMov="exiftool '-FileName < CreateDate' -d /Volumes/new/backup/Mov/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e *.(MOV|mov)"
 alias exifJpg="exiftool '-FileName < CreateDate' -d /Volumes/new/backup/Photos/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e *.(JPG|jpg)"
 alias exifRecCreateDate="exiftool -r '-FileName < CreateDate' -d /Volumes/new/backup/Photos/%Y-%m/%Y-%m-%d_%H-%M-%S%%-c.%%e ."
@@ -435,14 +436,14 @@ fi
 # }}}
 
 # start tmux or screen when shell opened# {{{
-if [ $OSTYPE = "cygwin" ]; then
-    if [ $TERM != "screen" ]; then
-        exec screen -U -RR
-    fi
-else
+if which tmux > /dev/null 2>&1 ; then
     # http://filmlang.org/computer/tmux
     if [ -z $TMUX ]; then
         tmux attach -d || tmux
+    fi
+elif which screen > /dev/null 2>&1 ; then
+    if [ $TERM != "screen" ]; then
+        exec screen -U -RR
     fi
 fi
 # }}}
