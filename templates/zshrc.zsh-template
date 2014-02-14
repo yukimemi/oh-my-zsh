@@ -158,7 +158,9 @@ zstyle ':completion:*' group-name ''
 # }}}
 #######################################################################################################
 #{{{ history
-if [ -d ~/Dropbox ]; then
+if [ -d "/Volumes/Bitcasa Infinite Drive" ]; then
+    HISTFILE=/Volumes/Bitcasa\ Infinite\ Drive/.zsh_history
+elif [ -d ~/Dropbox ]; then
     HISTFILE=~/Dropbox/.zsh_history
 else
     HISTFILE=~/.zsh_history
@@ -228,6 +230,9 @@ alias -g G=' | grep'
 #######################################################################################################
 #{{{ function
 function chpwd() { ls -F }
+
+# http://www.gitignore.io/cli
+function gi() { curl http://www.gitignore.io/api/$@ ;}
 
 function google() {# {{{
     local str opt
@@ -439,8 +444,12 @@ fi
 if which tmux > /dev/null 2>&1 ; then
     # http://filmlang.org/computer/tmux
     if [ -z $TMUX ]; then
+        [ ! -d ${HOME}/.tmux ] && mkdir ${HOME}/.tmux
         tmux attach -d || tmux
+    else
+        tmux pipe-pane 'cat >> $HOME/.tmux/`date +%Y-%m-%d_%H:%M:%S`.log'
     fi
+
 elif which screen > /dev/null 2>&1 ; then
     if [ $TERM != "screen" ]; then
         exec screen -U -RR
