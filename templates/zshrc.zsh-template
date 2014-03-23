@@ -187,7 +187,7 @@ case "${OSTYPE}" in
         alias ls='ls --color=auto'
         #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
         alias rm=rmtrash
-        alias empty-trash='sudo /bin/rm -rf ~/.Trash/*'
+        alias empty-trash='sudo /bin/rm -rf ~/.Trash/*; sudo /bin/rm -rf ~/.Trash/.*'
         alias shitamplayer='mplayer -fixed-vo -framedrop -ontop -geometry 100%:100%'
         alias vlc='open -a ~/Applications/VLC.app "$@"'
         alias screensaver='open /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app'
