@@ -493,15 +493,20 @@ fi
 #{{{ plugins
 # zaw
 [[ ! -d "${HOME}/.zaw" ]] && git clone https://github.com/zsh-users/zaw.git ~/.zaw
-zstyle ':filter-select' case-insensitive yes # 絞り込みをcase-insensitiveに
+zstyle ':filter-select' case-insensitive yes
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 source ~/.zaw/zaw.zsh
-# zaw-cdr
+# bindkey
 bindkey '^@' zaw-cdr
+bindkey '^R' zaw-history
+bindkey '^X^F' zaw-git-files
+bindkey '^X^B' zaw-git-branches
+bindkey '^X^P' zaw-process
+bindkey '^A' zaw-tmux
 # }}}
 #######################################################################################################
 #{{{ local conf
